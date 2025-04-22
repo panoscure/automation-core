@@ -12,24 +12,23 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DriverManager {
-    private static WebDriver driver;
+    // ThreadLocal to ensure each test gets its own WebDriver instance
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    public static WebDriver initializeDriver(String browser,String executionMode) throws MalformedURLException {
+    public static WebDriver initializeDriver(String browser, String executionMode) throws MalformedURLException {
 
         switch (executionMode.toLowerCase()) {
             case "remote":
-                driver = initializeRemoteDriver(browser);
+                driver.set(initializeRemoteDriver(browser));
                 break;
-
-
             case "local":
             default:
-                driver = initializeLocalDriver(browser);
+                driver.set(initializeLocalDriver(browser));
                 break;
         }
 
-        driver.manage().window().maximize();
-        return driver;
+        driver.get().manage().window().maximize();
+        return driver.get();
     }
 
     private static WebDriver initializeLocalDriver(String browser) {
@@ -68,13 +67,13 @@ public class DriverManager {
     }
 
     public static WebDriver getDriver() {
-        return driver;
+        return driver.get();
     }
 
     public static void quitDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove();
         }
-    }}
-
+    }
+}
