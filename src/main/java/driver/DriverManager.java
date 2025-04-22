@@ -16,6 +16,7 @@ public class DriverManager {
                 driver = new FirefoxDriver();
                 break;
             // Add more if needed
+
         }
             driver.manage().window().maximize();
             //driver.get(url);
