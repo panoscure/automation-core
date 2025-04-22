@@ -21,6 +21,7 @@ public class DriverManager {
                 driver = initializeRemoteDriver(browser);
                 break;
 
+
             case "local":
             default:
                 driver = initializeLocalDriver(browser);
