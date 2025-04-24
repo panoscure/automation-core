@@ -15,6 +15,11 @@
             <artifactId>selenium-java</artifactId>
             <version>4.19.1</version> <!-- Use latest stable version -->
         </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>4.2.1</version>
+        </dependency>
     </dependencies>
 
     <properties>
